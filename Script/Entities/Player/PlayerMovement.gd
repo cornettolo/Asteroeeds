@@ -5,7 +5,8 @@ export (float) var max_acceleration = 1.05
 export (float) var max_drag = 120
 export( float) var drag = 3
 export (float) var rotation_speed = 2.4
-export (int) var rate_of_fire = 400
+export (int) var rate_of_fire = 5
+
 
 const BaseBullet = preload("res://Prefabs/Entities/Bullet.tscn")
 
@@ -54,6 +55,7 @@ func accelerate():
 	
 	if drift_velocity.length() > max_drag:
 		drift_velocity = drift_velocity.normalized() * max_drag
+	speed = speed/((1+drag/25))
 
 func drift():
 	velocity = drift_velocity
@@ -61,20 +63,28 @@ func drift():
 	speed = speed/((1+drag/25))
 
 func shoot():
-	shootTimer.set_one_shot(true)
-	shootTimer.start(1/rate_of_fire)
-	
 	var bullet = BaseBullet.instance()
 	bullet.name = "pewpew"
-	var bullet_pos = Vector2(12, 0).rotated(rotation)
+	var bullet_pos = Vector2(9, 0).rotated(rotation)
 	bullet.position = self.position + Vector2(bullet_pos)
 	bullet.rotation = self.rotation
 	# bullet.velocity = self.velocity + Vector2(0,1).rotated(self.rotation+3*PI/2) * 200
 	bullet.set_linear_velocity(self.velocity + Vector2(0,1).rotated(self.rotation+3*PI/2) * 200)
 	ParentNode.add_child(bullet)
 
+	var timer_time = 1.0/rate_of_fire
+	shootTimer.start(timer_time)
 	shoot_end_cycle = false
 
+func check_outside():
+	if position.x > 330:
+		position.x = -10
+	if position.x < -10:
+		position.x = 330
+	if position.y > 190:
+		position.y = -10
+	if position.y < -10:
+		position.y = 190
 
 func _physics_process(delta):
 	input()
@@ -86,10 +96,17 @@ func _physics_process(delta):
 		
 	if is_shooting and shoot_end_cycle:
 		shoot()
-		
+	
+	check_outside()
 	rotation += rotation_dir * rotation_speed * delta
 	velocity = move_and_slide(velocity)
 
 
 func _on_ShootTimer_timeout():
 	shoot_end_cycle = true
+
+
+func _on_Area2D_area_entered(area):
+	if area.is_in_group("border"):
+		print('tocco bordo')
+
