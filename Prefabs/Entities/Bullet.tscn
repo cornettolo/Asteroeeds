@@ -10,7 +10,10 @@ extents = Vector2( 1, 1 )
 length = 1.0
 
 [node name="Bullet" type="RigidBody2D"]
+mass = 3.0
 gravity_scale = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

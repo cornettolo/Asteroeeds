@@ -1,15 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprites/Environment/Tiled_background.png" type="Texture" id=1]
 [ext_resource path="res://Prefabs/Entities/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/Environment/hor_border.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Environment/ver_border.png" type="Texture" id=4]
+[ext_resource path="res://Prefabs/Entities/Asteroid.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 160, 8.00002 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 90 )
+extents = Vector2( 8, 108 )
 
 [node name="Scene" type="Node2D"]
 
@@ -24,57 +25,77 @@ offset = Vector2( 160, 90 )
 [node name="LowerBorder" type="Area2D" parent="Env" groups=[
 "border",
 ]]
-position = Vector2( 160, 186 )
+position = Vector2( 160, 190 )
 
 [node name="hor_border" type="Sprite" parent="Env/LowerBorder" groups=[
 "border",
 ]]
 texture = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/LowerBorder"]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/LowerBorder" groups=[
+"border",
+]]
 shape = SubResource( 1 )
 
 [node name="UpperBorder" type="Area2D" parent="Env" groups=[
 "border",
 ]]
-position = Vector2( 160, -6 )
+position = Vector2( 160, -10 )
 
 [node name="hor_border" type="Sprite" parent="Env/UpperBorder" groups=[
 "border",
 ]]
 texture = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/UpperBorder"]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/UpperBorder" groups=[
+"border",
+]]
 shape = SubResource( 1 )
 
 [node name="LeftBorder" type="Area2D" parent="Env" groups=[
 "border",
 ]]
-position = Vector2( -6, 90 )
+position = Vector2( -10, 90 )
 
-[node name="Sprite" type="Sprite" parent="Env/LeftBorder"]
+[node name="Sprite" type="Sprite" parent="Env/LeftBorder" groups=[
+"border",
+]]
 texture = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/LeftBorder"]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/LeftBorder" groups=[
+"border",
+]]
 shape = SubResource( 2 )
 
 [node name="RightBorder" type="Area2D" parent="Env" groups=[
 "border",
 ]]
-position = Vector2( 326, 90 )
+position = Vector2( 330, 90 )
 
-[node name="Sprite" type="Sprite" parent="Env/RightBorder"]
+[node name="Sprite" type="Sprite" parent="Env/RightBorder" groups=[
+"border",
+]]
 texture = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/RightBorder"]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Env/RightBorder" groups=[
+"border",
+]]
+position = Vector2( 3.05176e-05, 7.62939e-06 )
 shape = SubResource( 2 )
 
 [node name="Entities" type="Node2D" parent="."]
 
+[node name="Asteroid" parent="Entities" instance=ExtResource( 5 )]
+position = Vector2( 281, 120 )
+
+[node name="Asteroid2" parent="Entities" instance=ExtResource( 5 )]
+position = Vector2( 280, 72 )
+
+[node name="Asteroid3" parent="Entities" instance=ExtResource( 5 )]
+position = Vector2( 280, 72 )
+
 [node name="Player" parent="Entities" instance=ExtResource( 2 )]
 position = Vector2( 160, 80 )
 max_acceleration = 0.6
+
+[node name="GameManager" type="Node2D" parent="."]

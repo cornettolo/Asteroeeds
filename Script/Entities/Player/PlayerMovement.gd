@@ -107,6 +107,5 @@ func _on_ShootTimer_timeout():
 
 
 func _on_Area2D_area_entered(area):
-	if area.is_in_group("border"):
-		print('tocco bordo')
+	pass
 

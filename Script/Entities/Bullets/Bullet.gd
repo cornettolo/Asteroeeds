@@ -20,4 +20,5 @@ func _on_DestroyTimer_timeout():
 
 func _on_CollisionDetector_area_entered(area):
 	if not area.is_in_group("player"):
-		queue_free()
+		destroyTimer.start(0.1)
+		# queue_free()
