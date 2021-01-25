@@ -1,28 +1,44 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Sprites/Entities/asteroid.png" type="Texture" id=1]
-[ext_resource path="res://Prefabs/Entities/Asteroid.gd" type="Script" id=2]
+[ext_resource path="res://Script/Entities/Asteroids/Asteroid.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 6, 6 )
+extents = Vector2( 4, 6 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 7, 7 )
+extents = Vector2( 3, 3 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 2, 4 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5, 7 )
 
 [node name="Asteroid" type="RigidBody2D" groups=[
 "asteroid",
 ]]
-mass = 50.0
+mass = 200.0
 gravity_scale = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
+health = 200
+new_asteroids = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
+[node name="MainCollisionShape2D" type="CollisionShape2D" parent="." groups=[
 "asteroid",
 ]]
 visible = false
+position = Vector2( -2, 0 )
 shape = SubResource( 1 )
+
+[node name="SmallCollisionShape2D" type="CollisionShape2D" parent="." groups=[
+"asteroid",
+]]
+visible = false
+position = Vector2( 3, -3 )
+shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="." groups=[
 "asteroid",
@@ -35,11 +51,17 @@ texture = ExtResource( 1 )
 "asteroid",
 ]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetection" groups=[
+[node name="SmallCollisionShape2D" type="CollisionShape2D" parent="HitDetection" groups=[
 "asteroid",
 ]]
-visible = false
-shape = SubResource( 2 )
+position = Vector2( 5, -3 )
+shape = SubResource( 3 )
+
+[node name="MainCollisionShape2D" type="CollisionShape2D" parent="HitDetection" groups=[
+"asteroid",
+]]
+position = Vector2( -2, 0 )
+shape = SubResource( 4 )
 
 [node name="HitTimer" type="Timer" parent="." groups=[
 "asteroid",

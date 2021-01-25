@@ -23,7 +23,6 @@ config/icon="res://icon.png"
 
 window/size/width=320
 window/size/height=180
-window/size/fullscreen=true
 window/size/test_width=1290
 window/size/test_height=720
 window/stretch/mode="2d"
@@ -71,4 +70,8 @@ shoot={
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/2d/use_nvidia_rect_flicker_workaround=true
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=1
+quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
