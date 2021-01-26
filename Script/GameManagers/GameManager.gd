@@ -1,6 +1,6 @@
 extends Node2D
 
-export (int) var asteroidSpawnTime = 3
+export (int) var asteroidSpawnTime = 5
 
 onready var asteroidSpawnTimer = $'AsteroidSpawnTimer'
 onready var entitiesNode = $'../Entities'
@@ -46,7 +46,10 @@ func _on_player_move():
 
 
 func _on_AsteroidSpawnTimer_timeout():
-	asteroidSpawnTimer.start(asteroidSpawnTime/log(float(score)/100))
+	var wait_time = asteroidSpawnTime/(log(float(score)/100))
+	if log(float(score)/100) < 1:
+		wait_time = asteroidSpawnTime
+	asteroidSpawnTimer.start(wait_time)
 	spawn_asteroid()
 
 

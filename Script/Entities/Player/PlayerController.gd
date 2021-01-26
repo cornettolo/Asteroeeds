@@ -6,12 +6,10 @@ export (float) var max_acceleration = 1.05
 export (float) var max_drag = 120
 export (float) var drag = 3
 export (float) var rotation_speed = 2.4
-export (int) var rate_of_fire = 5
 
 signal change_health(value)
 signal moved
 
-const BaseBullet = preload("res://Prefabs/Entities/Bullet.tscn")
 
 var health = 100
 var velocity = Vector2()
@@ -20,17 +18,17 @@ var speed = 0.0
 var acceleration = 0.0
 var rotation_dir = 0.0
 var is_drifting = false
-var is_shooting = false
 var shoot_end_cycle = true
 var first_move = true
 
 onready var ParentNode = $'..'
-onready var shootTimer = $'ShootTimer'
-onready var hitTimer = $'HitTimer'
+
+onready var hitEffectsTimer = $"Timers/HitEffect"
 onready var hitDetector = $'HitDetection'
 onready var sprite = $'Sprite'
 
 onready var gameManager = get_tree().get_root().get_node('Scene/GameManager')
+
 
 func input():
 	is_drifting = false
@@ -50,8 +48,8 @@ func input():
 		emit_signal("moved")
 		first_move = false
 		
-	is_shooting = Input.is_action_pressed('shoot')
 	is_drifting = Input.is_action_pressed('drift')
+
 
 func accelerate():
 	speed += acceleration
@@ -73,24 +71,13 @@ func accelerate():
 		drift_velocity = drift_velocity.normalized() * max_drag
 	speed = speed/((1+drag/25))
 
+
 func drift():
+	acceleration = 0
 	velocity = drift_velocity
 	drift_velocity = drift_velocity/(1+drag/400)
 	speed = speed/((1+drag/25))
 
-func shoot():
-	var bullet = BaseBullet.instance()
-	
-	var bullet_pos = Vector2(10 + velocity.length()/50, 0).rotated(rotation)
-	bullet.position = self.position + Vector2(bullet_pos)
-	bullet.rotation = self.rotation
-	bullet.set_linear_velocity(self.velocity + Vector2(0,1).rotated(self.rotation+3*PI/2) * 350)
-	
-	ParentNode.add_child(bullet)
-
-	var timer_time = 1.0/rate_of_fire
-	shootTimer.start(timer_time)
-	shoot_end_cycle = false
 
 func check_outside():
 	if position.x > 325:
@@ -102,8 +89,10 @@ func check_outside():
 	if position.y < -5:
 		position.y = 185
 
+
 func get_damage():
 	pass
+
 
 func on_destroy():
 	queue_free()
@@ -115,6 +104,7 @@ func _ready():
 	self.connect('moved', gameManager, '_on_player_move')
 	emit_signal("change_health", 100)
 
+
 func _physics_process(delta):
 	input()
 	
@@ -122,18 +112,13 @@ func _physics_process(delta):
 		drift()
 	else:
 		accelerate()
-		
-	if is_shooting and shoot_end_cycle:
-		shoot()
 	
 	check_outside()
-	
 	rotation += rotation_dir * rotation_speed * delta
 	velocity = move_and_slide(velocity)
 
 
-func _on_ShootTimer_timeout():
-	shoot_end_cycle = true
+
 
 func _on_Area2D_body_entered(body):
 	if not body.is_in_group("border") and body != hitDetector and body != self:
@@ -143,7 +128,7 @@ func _on_Area2D_body_entered(body):
 			health -= 8
 		emit_signal("change_health", health)
 		sprite.modulate = Color(1, 0, 0)
-		hitTimer.start(0.1)
+		hitEffectsTimer.start(0.1)
 		if health <= 0:
 			on_destroy()
 

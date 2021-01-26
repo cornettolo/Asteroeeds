@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Sprites/Entities/pew.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Entities/Bullets/pew.png" type="Texture" id=1]
 [ext_resource path="res://Script/Entities/Bullets/Bullet.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 0.999997, 2 )
+extents = Vector2( 0.999997, 1 )
 
 [sub_resource type="RayShape2D" id=2]
 length = 3.0
