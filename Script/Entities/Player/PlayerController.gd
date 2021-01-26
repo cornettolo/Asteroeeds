@@ -122,6 +122,7 @@ func _physics_process(delta):
 
 func _on_Area2D_body_entered(body):
 	if not body.is_in_group("border") and body != hitDetector and body != self:
+		print(body.get_node('.').name)
 		if body.is_in_group("bullet") or body.is_in_group("asteroid"):
 			health -= body.get_node('.').get_damage()
 		else:

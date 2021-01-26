@@ -13,10 +13,13 @@ export (int) var score_value = 15
 onready var sprite = $'Sprite'
 onready var hitTimer = $'HitTimer'
 onready var hitDetector = $'HitDetection'
+onready var particle = $'Particles2D'
 
 onready var ParentNode = $'..'
 
 onready var gameManager = get_tree().get_root().get_node('Scene/GameManager')
+
+onready var max_health = health
 
 func get_damage():
 	return damage
@@ -49,6 +52,7 @@ func check_outside():
 		# print("[Asteroid] outside x: " + str(position.x) + " y: " + str(position.y))
 
 func _ready():
+	particle.emitting = false
 	sprite.modulate = Color(1, 1, 1)
 	rng.randomize()
 	linear_velocity = Vector2(rng.randf_range(-20,20),rng.randf_range(-20,20))
@@ -77,6 +81,9 @@ func _on_Area2D_body_entered(body):
 			health -= 8
 		sprite.modulate = Color(1, 0, 0)
 		hitTimer.start(0.1)
+		if int((max_health - health)/25):
+			particle.emitting = true
+			particle.amount = int((max_health - health)/25)
 		if health <= 0:
 			on_destroy()
 
