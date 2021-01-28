@@ -22,7 +22,7 @@ func _ready():
 	gameOver.visible = false
 	updateUI(str(score), 'score')
 	updateUI(str(playerHealth), 'shipinfo.health')
-
+	
 
 func reset_scene():
 	get_tree().reload_current_scene()
@@ -47,8 +47,8 @@ func _on_player_move():
 
 func _on_AsteroidSpawnTimer_timeout():
 	var wait_time = asteroidSpawnTime
-	if log(float(score)/100) > 1:
-		wait_time = asteroidSpawnTime/(log(float(score)/100))
+	if log(float(score)/200) > 1:
+		wait_time = asteroidSpawnTime/(log(float(score)/200))
 	asteroidSpawnTimer.start(wait_time)
 	spawn_asteroid()
 
@@ -70,7 +70,7 @@ func _on_playerHealth_change(value):
 
 
 func _process(_delta):
-	if Input.is_action_pressed('drift') and gameOver.visible:
+	if Input.is_action_pressed("ui_enter") and gameOver.visible:
 		reset_scene()
 
 

@@ -6,12 +6,13 @@ export (float) var max_acceleration = 1.05
 export (float) var max_drag = 120
 export (float) var drag = 3
 export (float) var rotation_speed = 2.4
+export (int) var health = 100
 
 signal change_health(value)
 signal moved
 
 
-var health = 100
+
 var velocity = Vector2()
 var drift_velocity = Vector2()
 var speed = 0.0
@@ -102,7 +103,7 @@ func _ready():
 	sprite.modulate = Color(1, 1, 1)
 	self.connect('change_health', gameManager, '_on_playerHealth_change')
 	self.connect('moved', gameManager, '_on_player_move')
-	emit_signal("change_health", 100)
+	emit_signal("change_health", health)
 
 
 func _physics_process(delta):

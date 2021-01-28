@@ -25,7 +25,7 @@ gravity_scale = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
-health = 200
+health = 260
 new_asteroids = 3
 
 [node name="Sprite" type="Sprite" parent="." groups=[
