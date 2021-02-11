@@ -125,14 +125,12 @@ texture = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
 "player",
 ]]
-visible = false
 position = Vector2( -1, 0 )
 shape = SubResource( 1 )
 
 [node name="HitDetection" type="Area2D" parent="." groups=[
 "player",
 ]]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetection" groups=[
 "player",

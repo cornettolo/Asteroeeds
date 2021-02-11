@@ -8,20 +8,16 @@ var SmallAsteroid = null
 
 var rng = RandomNumberGenerator.new()
 
-export (int) var health = 100
 export (int) var new_asteroids = 5
 export (int) var score_value = 50
 
 onready var sprite = $'Sprite'
 onready var hitTimer = $'HitTimer'
-onready var hitDetector = $'HitDetection'
 onready var particle = $'Particles2D'
 
 onready var gameManager = get_tree().get_root().get_node('Scene/GameManager')
 
 onready var ParentNode = $'..'
-
-onready var max_health = health
 
 func on_destroy():
 	for _i in range(new_asteroids):
@@ -44,19 +40,25 @@ func _ready():
 
 
 func _on_Area2D_body_entered(body):
+	sprite.modulate = Color(1, 0, 0)
+	hitTimer.start(0.1)
+	if int((max_health - health)/25):
+		particle.emitting = true
+		particle.amount = int((max_health - health)/25)
+	._on_Area2D_body_entered(body)
+	
 	# print('collision between: ' + str(hitDetector) + ' and ' + str(body))
-	if not body.is_in_group("border") and body != hitDetector and body != self:
-		if body.is_in_group("bullet"):
-			health -= body.get_node('.').get_damage()
-		sprite.modulate = Color(1, 0, 0)
-		hitTimer.start(0.1)
-		if int((max_health - health)/25):
-			particle.emitting = true
-			particle.amount = int((max_health - health)/25)
-		if health <= 0:
-			on_destroy()
+#	if not body.is_in_group("border") and body != hitDetector and body != self:
+#		if body.is_in_group("bullet"):
+#			health -= body.get_node('.').get_damage()
+#		sprite.modulate = Color(1, 0, 0)
+#		hitTimer.start(0.1)
+#		if int((max_health - health)/25):
+#			particle.emitting = true
+#			particle.amount = int((max_health - health)/25)
+#		if health <= 0:
+#			on_destroy()
 
 
 func _on_HitTimer_timeout():
 	sprite.modulate = Color(1, 1, 1)
-	pass # Replace with function body.

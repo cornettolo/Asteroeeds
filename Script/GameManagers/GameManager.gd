@@ -1,8 +1,10 @@
 extends Node2D
 
-export (int) var asteroidSpawnTime = 5
+export (int) var asteroidSpawnTime = 6.0
+export (int) var repairpackSpawnTime = 3.0
 
 onready var asteroidSpawnTimer = $'AsteroidSpawnTimer'
+onready var repairSpawnTimer = $'RepairSpawnTimer'
 onready var entitiesNode = $'../Entities'
 onready var scoreGUI = $"../GUI/GUITop/ScoreCounter/ScoreNumber"
 onready var shipHealthGUI = $"../GUI/GUIBottom/ShipInfoCounters/HealthNumber"
@@ -10,6 +12,7 @@ onready var istructions = $"../GUI/Istructions"
 onready var gameOver = $"../GUI/Game Over Screen"
 
 const Asteroid = preload("res://Prefabs/Entities/Asteroid.tscn")
+const Repair = preload("res://Prefabs/Entities/RepairPack.tscn")
 var rng = RandomNumberGenerator.new()
 
 var score = 0
@@ -37,12 +40,21 @@ func spawn_asteroid():
 		new_asteroid_instance.position = Vector2(rng.randf_range(0,330),190)
 	entitiesNode.call_deferred("add_child", new_asteroid_instance)
 
+func spawn_repair():
+	var new_repair_instance = Repair.instance()
+	var toss = rng.randi_range(0,1)
+	if(toss > 0):
+		new_repair_instance.position = Vector2(330,rng.randf_range(0,190))
+	else:
+		new_repair_instance.position = Vector2(rng.randf_range(0,330),190)
+	entitiesNode.call_deferred("add_child", new_repair_instance)
+
 
 func _on_player_move():
 	if (istructions):
 		istructions.queue_free()
 	asteroidSpawnTimer.start(asteroidSpawnTime)
-	print('moved')
+	repairSpawnTimer.start(repairpackSpawnTime)
 
 
 func _on_AsteroidSpawnTimer_timeout():
@@ -81,3 +93,7 @@ func updateUI(data, key):
 		shipHealthGUI.text = data
 
 
+func _on_RepairSpawnTimer_timeout():
+	var wait_time = repairpackSpawnTime
+	repairSpawnTimer.start(wait_time)
+	spawn_repair()

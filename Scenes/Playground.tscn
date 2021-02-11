@@ -16,6 +16,10 @@ extents = Vector2( 8, 108 )
 [node name="Scene" type="Node2D"]
 
 [node name="Env" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="Background" type="Node2D" parent="Env"]
 
@@ -85,11 +89,13 @@ position = Vector2( 3.05176e-05, 7.62939e-06 )
 shape = SubResource( 2 )
 
 [node name="Entities" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Player" parent="Entities" instance=ExtResource( 2 )]
 position = Vector2( 160, 80 )
 max_speed = 30.0
-min_speed = -1.0
 max_acceleration = 0.4
 drag = 1.2
 rotation_speed = 3.6
@@ -99,6 +105,13 @@ health = 80
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="AsteroidSpawnTimer" type="Timer" parent="GameManager"]
+
+[node name="RepairSpawnTimer" type="Timer" parent="GameManager"]
 [connection signal="timeout" from="GameManager/AsteroidSpawnTimer" to="GameManager" method="_on_AsteroidSpawnTimer_timeout"]
+[connection signal="timeout" from="GameManager/RepairSpawnTimer" to="GameManager" method="_on_RepairSpawnTimer_timeout"]

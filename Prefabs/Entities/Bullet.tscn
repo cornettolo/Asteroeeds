@@ -20,7 +20,7 @@ linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
 duration = 30.0
-damage = 12
+damage = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
 "bullet",

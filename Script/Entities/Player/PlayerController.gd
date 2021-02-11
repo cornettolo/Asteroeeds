@@ -1,4 +1,4 @@
- extends KinematicBody2D
+extends KinematicBody2D
 
 export (float) var max_speed = 40
 export (float) var min_speed = -1
@@ -92,7 +92,7 @@ func check_outside():
 
 
 func get_damage():
-	pass
+	return 10
 
 
 func on_destroy():
@@ -119,15 +119,10 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 
 
-
-
 func _on_Area2D_body_entered(body):
-	if not body.is_in_group("border") and body != hitDetector and body != self:
-		print(body.get_node('.').name)
-		if body.is_in_group("bullet") or body.is_in_group("asteroid"):
-			health -= body.get_node('.').get_damage()
-		else:
-			health -= 8
+	var body_node = body.get_node('.')
+	if body_node.get_damage() and body != hitDetector and body != self:
+		health -= body_node.get_damage()
 		emit_signal("change_health", health)
 		sprite.modulate = Color(1, 0, 0)
 		hitEffectsTimer.start(0.1)

@@ -37,6 +37,8 @@ gravity_scale = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
+damage = 5
+health = 150
 
 [node name="MainCollisionShape2D" type="CollisionShape2D" parent="." groups=[
 "asteroid",
