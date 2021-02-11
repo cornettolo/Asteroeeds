@@ -2,7 +2,7 @@
 
 My version of asteroids created with Godot
 
-Open Cornettee Asteroids.exe on windows or Cornettee Asteroids.x86_64 on linux
+Open **Cornettee Asteroids.exe** on windows or **Cornettee Asteroids.x86_64** on linux
 
 ## Controls
 
@@ -17,3 +17,5 @@ w/s: accelerate/decelerate \
 a/d: rotate left/right \
 spacebar: cut engine \
 control: shoot 
+
+Exit: Alt+F4
