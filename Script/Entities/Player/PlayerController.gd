@@ -11,7 +11,7 @@ export (int) var health = 100
 signal change_health(value)
 signal moved
 
-
+class_name PlayerMovement, "res://Sprites/Entities/Ships/spear_class/spear_class.png"
 
 var velocity = Vector2()
 var drift_velocity = Vector2()

@@ -8,9 +8,32 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Entity",
+"class": "Asteroid",
+"language": "GDScript",
+"path": "res://Script/Entities/Asteroids/Asteroid.gd"
+}, {
+"base": "RigidBody2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://Script/Entities/Entity.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "PlayerMovement",
+"language": "GDScript",
+"path": "res://Script/Entities/Player/PlayerController.gd"
+}, {
+"base": "Asteroid",
+"class": "SM_Asteroid",
+"language": "GDScript",
+"path": "res://Script/Entities/Asteroids/SmallAsteroid.gd"
+} ]
 _global_script_class_icons={
-
+"Asteroid": "",
+"Entity": "",
+"PlayerMovement": "res://Sprites/Entities/Ships/spear_class/spear_class.png",
+"SM_Asteroid": ""
 }
 
 [application]
@@ -30,6 +53,7 @@ window/size/width=320
 window/size/height=180
 window/size/test_width=1290
 window/size/test_height=720
+window/vsync/use_vsync=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 

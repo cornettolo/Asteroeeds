@@ -20,7 +20,6 @@ extents = Vector2( 8, 108 )
 [node name="Background" type="Node2D" parent="Env"]
 
 [node name="Sprite" type="Sprite" parent="Env/Background"]
-position = Vector2( 0, 1 )
 texture = ExtResource( 1 )
 offset = Vector2( 160, 90 )
 
@@ -89,7 +88,12 @@ shape = SubResource( 2 )
 
 [node name="Player" parent="Entities" instance=ExtResource( 2 )]
 position = Vector2( 160, 80 )
-max_acceleration = 0.6
+max_speed = 30.0
+min_speed = -1.0
+max_acceleration = 0.4
+drag = 1.2
+rotation_speed = 3.6
+health = 80
 
 [node name="GUI" parent="." instance=ExtResource( 5 )]
 

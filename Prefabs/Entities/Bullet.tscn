@@ -54,13 +54,12 @@ one_way_collision_margin = 20.0
 [node name="HitParticle" type="Particles2D" parent="." groups=[
 "bullet",
 ]]
-position = Vector2( -3, 0 )
+position = Vector2( -1, 0 )
 emitting = false
 amount = 4
-lifetime = 0.5
+lifetime = 0.3
 one_shot = true
 speed_scale = 2.0
-randomness = 1.0
 local_coords = false
 process_material = ExtResource( 3 )
 texture = ExtResource( 4 )
