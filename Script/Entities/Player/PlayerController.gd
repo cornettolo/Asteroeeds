@@ -11,7 +11,7 @@ export (int) var health = 100
 signal change_health(value)
 signal moved
 
-class_name PlayerMovement, "res://Sprites/Entities/Ships/spear_class/spear_class.png"
+class_name Player, "res://Sprites/Entities/Ships/spear_class/spear_class.png"
 
 var velocity = Vector2()
 var drift_velocity = Vector2()
@@ -21,6 +21,7 @@ var rotation_dir = 0.0
 var is_drifting = false
 var shoot_end_cycle = true
 var first_move = true
+var max_health = 0
 
 onready var ParentNode = $'..'
 
@@ -93,6 +94,23 @@ func check_outside():
 
 func get_damage():
 	return 10
+	
+func damaged(amount):
+	health -= amount
+	emit_signal("change_health", health)
+	sprite.modulate = Color(1, 0, 0)
+	hitEffectsTimer.start(0.1)
+	if health <= 0:
+		on_destroy()
+
+func healed(amount):
+	if health + amount > max_health:
+		health = max_health
+	else:
+		health += amount
+	emit_signal("change_health", health)
+	sprite.modulate = Color(0, 1, 0)
+	hitEffectsTimer.start(0.1)
 
 
 func on_destroy():
@@ -103,6 +121,7 @@ func _ready():
 	sprite.modulate = Color(1, 1, 1)
 	self.connect('change_health', gameManager, '_on_playerHealth_change')
 	self.connect('moved', gameManager, '_on_player_move')
+	max_health = health
 	emit_signal("change_health", health)
 
 
@@ -121,14 +140,11 @@ func _physics_process(delta):
 
 func _on_Area2D_body_entered(body):
 	var body_node = body.get_node('.')
-	if body_node.get_damage() and body != hitDetector and body != self:
-		health -= body_node.get_damage()
-		emit_signal("change_health", health)
-		sprite.modulate = Color(1, 0, 0)
-		hitEffectsTimer.start(0.1)
-		if health <= 0:
-			on_destroy()
-
+	if body != hitDetector and body != self:
+		if body_node.has_method('get_damage'):
+			damaged(body_node.get_damage())
+		if body_node.has_method('get_healing'):
+			healed(body_node.get_healing())
 
 func _on_HitTimer_timeout():
 	sprite.modulate = Color(1, 1, 1)

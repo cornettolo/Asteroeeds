@@ -1,5 +1,7 @@
 extends Entity
 
+var heal_amount = 20
+
 var rng = RandomNumberGenerator.new()
 
 func _ready():
@@ -11,3 +13,8 @@ func _ready():
 func _on_Area2D_body_entered(body):
 	._on_Area2D_body_entered(body)
 	print(body)
+
+
+func get_healing():
+	queue_free()
+	return heal_amount

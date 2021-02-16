@@ -20,7 +20,7 @@ _global_script_classes=[ {
 "path": "res://Script/Entities/Entity.gd"
 }, {
 "base": "KinematicBody2D",
-"class": "PlayerMovement",
+"class": "Player",
 "language": "GDScript",
 "path": "res://Script/Entities/Player/PlayerController.gd"
 }, {
@@ -32,7 +32,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Asteroid": "",
 "Entity": "",
-"PlayerMovement": "res://Sprites/Entities/Ships/spear_class/spear_class.png",
+"Player": "res://Sprites/Entities/Ships/spear_class/spear_class.png",
 "SM_Asteroid": ""
 }
 

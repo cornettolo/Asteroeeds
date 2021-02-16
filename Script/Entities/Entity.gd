@@ -57,11 +57,7 @@ func _physics_process(_delta):
 
 func _on_Area2D_body_entered(body):
 	var body_node = body.get_node('.')
-	print(body_node.name)
-	print(body_node.has_method('get_damage'))
-	print(health)
 	if body_node.has_method('get_damage') and body != hitDetector and body != self:
 		health -= body_node.get_damage()
-		emit_signal("change_health", health)
 		if health <= 0:
 			on_destroy()
