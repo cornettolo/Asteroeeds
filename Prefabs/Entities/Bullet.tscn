@@ -14,7 +14,9 @@ length = 3.0
 [node name="Bullet" type="RigidBody2D" groups=[
 "bullet",
 ]]
-mass = 3.0
+collision_layer = 32
+collision_mask = 2
+mass = 2.0
 gravity_scale = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
@@ -43,6 +45,8 @@ one_shot = true
 [node name="CollisionDetector" type="Area2D" parent="." groups=[
 "bullet",
 ]]
+collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector" groups=[
 "bullet",

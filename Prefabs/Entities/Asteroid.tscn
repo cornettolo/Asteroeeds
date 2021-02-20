@@ -20,7 +20,9 @@ extents = Vector2( 4, 6 )
 [node name="Asteroid" type="RigidBody2D" groups=[
 "asteroid",
 ]]
-mass = 200.0
+collision_layer = 2
+collision_mask = 2147483681
+mass = 300.0
 gravity_scale = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
@@ -50,6 +52,8 @@ shape = SubResource( 2 )
 [node name="HitDetection" type="Area2D" parent="." groups=[
 "asteroid",
 ]]
+collision_layer = 2
+collision_mask = 33
 
 [node name="SmallCollisionShape2D" type="CollisionShape2D" parent="HitDetection" groups=[
 "asteroid",
@@ -68,8 +72,7 @@ shape = SubResource( 4 )
 ]]
 
 [node name="Particles2D" type="Particles2D" parent="."]
-amount = 4
-lifetime = 2.0
+lifetime = 4.0
 speed_scale = 2.0
 randomness = 1.0
 local_coords = false

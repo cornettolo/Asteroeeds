@@ -28,7 +28,7 @@ func on_destroy():
 	queue_free()
 
 func _ready():
-	particle.emitting = false
+	# particle.emitting = false
 	sprite.modulate = Color(1, 1, 1)
 	rng.randomize()
 	linear_velocity = Vector2(rng.randf_range(-35,35),rng.randf_range(-35,35))
@@ -42,9 +42,9 @@ func _ready():
 func _on_Area2D_body_entered(body):
 	sprite.modulate = Color(1, 0, 0)
 	hitTimer.start(0.1)
-	if int((max_health - health)/25):
-		particle.emitting = true
-		particle.amount = int((max_health - health)/25)
+#	if int((max_health - health)/25):
+#		particle.emitting = true
+#		particle.amount = int((max_health - health)/25)
 	._on_Area2D_body_entered(body)
 	
 	# print('collision between: ' + str(hitDetector) + ' and ' + str(body))

@@ -10,7 +10,8 @@ radius = 4.0
 radius = 5.0
 
 [node name="RepairPack" type="RigidBody2D"]
-mass = 25.0
+collision_layer = 4
+mass = 130.0
 gravity_scale = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
@@ -24,6 +25,7 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="HitDetection" type="Area2D" parent="."]
+collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetection"]
 shape = SubResource( 2 )
