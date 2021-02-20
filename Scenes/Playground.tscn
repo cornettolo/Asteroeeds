@@ -110,7 +110,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 asteroidSpawnTime = 10
-repairpackSpawnTime = 10
+repairpackSpawnTime = 30
 
 [node name="AsteroidSpawnTimer" type="Timer" parent="GameManager"]
 
