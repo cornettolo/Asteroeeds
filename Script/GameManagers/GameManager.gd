@@ -122,6 +122,8 @@ func _process(_delta):
 		get_tree().quit()
 		
 	if Input.is_action_just_released("ui_pause") and game_started:
+		if paused:
+			get_tree().quit()
 		pause()
 		
 func updateUI(data, key):
