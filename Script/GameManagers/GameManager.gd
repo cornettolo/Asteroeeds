@@ -6,10 +6,12 @@ export (int) var repairpackSpawnTime = 3.0
 onready var asteroidSpawnTimer = $'AsteroidSpawnTimer'
 onready var repairSpawnTimer = $'RepairSpawnTimer'
 onready var entitiesNode = $'../Entities'
+onready var UI = $"../GUI"
 onready var scoreGUI = $"../GUI/GUITop/ScoreCounter/ScoreNumber"
 onready var shipHealthGUI = $"../GUI/GUIBottom/ShipInfoCounters/HealthNumber"
-onready var istructions = $"../GUI/Istructions"
-onready var gameOver = $"../GUI/Game Over Screen"
+onready var istructionsUI = $"../GUI/Istructions"
+onready var gameOverUI = $"../GUI/Game Over Screen"
+onready var pauseUI = $"../GUI/Pause Screen"
 
 const Asteroid = preload("res://Prefabs/Entities/Asteroid.tscn")
 const Repair = preload("res://Prefabs/Entities/RepairPack.tscn")
@@ -24,7 +26,11 @@ var paused = false
 func _ready():
 	asteroidSpawnTimer.one_shot = true
 	rng.randomize()
-	gameOver.visible = false
+	
+	UI.visible = true
+	istructionsUI.visible = true
+	gameOverUI.visible = false
+	pauseUI.visible = false
 	updateUI(str(score), 'score')
 	updateUI(str(playerHealth), 'shipinfo.health')
 	
@@ -35,12 +41,13 @@ func reset_scene():
 
 func pause():
 	# show pause
+	pauseUI.visible = true
 	print('pause')
 	paused = true
 	get_tree().paused = Node.PAUSE_MODE_PROCESS
 	
 func unpause():
-	pass
+	pauseUI.visible = false
 	# remove pause
 	print('unpause')
 	paused = false
@@ -67,8 +74,8 @@ func spawn_repair():
 
 
 func _on_player_move():
-	if (istructions):
-		istructions.queue_free()
+	if (istructionsUI):
+		istructionsUI.queue_free()
 	game_started = true
 	asteroidSpawnTimer.start(asteroidSpawnTime)
 	repairSpawnTimer.start(repairpackSpawnTime)
@@ -95,20 +102,27 @@ func _on_playerHealth_change(value):
 	if playerHealth <= 0:
 		playerHealth = 0
 		updateUI(str(playerHealth), 'shipinfo.health')
-		gameOver.visible = true
+		gameOverUI.visible = true
 		game_started = false
 
 
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
+		pause()
+
+
 func _process(_delta):
-	if Input.is_action_pressed("ui_enter") and gameOver.visible:
-		reset_scene()
-	if Input.is_action_pressed("ui_esc") and gameOver.visible:
-		get_tree().quit()
-	if Input.is_action_just_released("ui_pause") and game_started:
-		if paused:
+	if Input.is_action_pressed("ui_enter"):
+		if gameOverUI.visible:
+			reset_scene()
+		elif paused:
 			unpause()
-		else:
-			pause()
+
+	if Input.is_action_pressed("ui_esc") and gameOverUI.visible:
+		get_tree().quit()
+		
+	if Input.is_action_just_released("ui_pause") and game_started:
+		pause()
 		
 func updateUI(data, key):
 	if key=='score':
