@@ -17,6 +17,8 @@ var rng = RandomNumberGenerator.new()
 
 var score = 0
 var playerHealth = 0
+var game_started = false
+var paused = false
 
 
 func _ready():
@@ -29,6 +31,20 @@ func _ready():
 
 func reset_scene():
 	get_tree().reload_current_scene()
+
+
+func pause():
+	# show pause
+	print('pause')
+	paused = true
+	get_tree().paused = Node.PAUSE_MODE_PROCESS
+	
+func unpause():
+	pass
+	# remove pause
+	print('unpause')
+	paused = false
+	get_tree().paused = false
 
 
 func spawn_asteroid():
@@ -53,6 +69,7 @@ func spawn_repair():
 func _on_player_move():
 	if (istructions):
 		istructions.queue_free()
+	game_started = true
 	asteroidSpawnTimer.start(asteroidSpawnTime)
 	repairSpawnTimer.start(repairpackSpawnTime)
 
@@ -79,13 +96,20 @@ func _on_playerHealth_change(value):
 		playerHealth = 0
 		updateUI(str(playerHealth), 'shipinfo.health')
 		gameOver.visible = true
+		game_started = false
 
 
 func _process(_delta):
 	if Input.is_action_pressed("ui_enter") and gameOver.visible:
 		reset_scene()
-
-
+	if Input.is_action_pressed("ui_esc") and gameOver.visible:
+		get_tree().quit()
+	if Input.is_action_just_released("ui_pause") and game_started:
+		if paused:
+			unpause()
+		else:
+			pause()
+		
 func updateUI(data, key):
 	if key=='score':
 		scoreGUI.text = data
