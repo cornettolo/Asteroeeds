@@ -45,7 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Cornettee Asteroids"
-run/main_scene="res://Scenes/Playground.tscn"
+run/main_scene="res://Scenes/MainMenu.tscn"
 boot_splash/bg_color=Color( 0.0470588, 0.0470588, 0.0627451, 1 )
 config/icon="res://icon.png"
 
