@@ -9,7 +9,7 @@
 [ext_resource path="res://Script/Entities/Player/ThrustersManager.gd" type="Script" id=8]
 [ext_resource path="res://Sprites/Particles/white_square.png" type="Texture" id=9]
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=1]
 lifetime_randomness = 0.3
 emission_shape = 1
 emission_sphere_radius = 0.7
@@ -30,10 +30,10 @@ color = Color( 0.207843, 0.207843, 0.207843, 0.403922 )
 hue_variation = -0.04
 hue_variation_random = 0.45
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 6, 2 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 7, 3 )
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -154,7 +154,7 @@ emitting = false
 amount = 60
 lifetime = 0.6
 local_coords = false
-process_material = SubResource( 3 )
+process_material = SubResource( 1 )
 
 [node name="Fire" type="Particles2D" parent="DamageParticles"]
 position = Vector2( -4, 0 )
@@ -169,7 +169,7 @@ process_material = ExtResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
 "player",
 ]]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="HitDetection" type="Area2D" parent="." groups=[
 "player",
@@ -179,7 +179,7 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetection" groups=[
 "player",
 ]]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 [connection signal="timeout" from="Timers/Shoot" to="ShootManager" method="_on_Shoot_timeout"]
 [connection signal="timeout" from="Timers/HitEffect" to="." method="_on_HitTimer_timeout"]
 [connection signal="body_entered" from="HitDetection" to="." method="_on_Area2D_body_entered"]

@@ -34,7 +34,7 @@ func _ready():
 	linear_velocity = Vector2(rng.randf_range(-35,35),rng.randf_range(-35,35))
 	angular_velocity = rng.randf_range(-5,5)
 	
-	SmallAsteroid = load("res://Prefabs/Entities/SmallAsteroid.tscn")
+	SmallAsteroid = load("res://Prefabs/Entities/Asteroids/SmallAsteroid.tscn")
 	
 	self.connect('destroyed_asteroid', gameManager, '_on_Asteroid_destroyed')
 

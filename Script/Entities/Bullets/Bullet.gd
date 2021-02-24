@@ -23,6 +23,7 @@ func get_damage():
 
 func _physics_process(delta):
 	if hitted:
+		sprite.visible = false
 		collisionShape.disabled = true
 		collisionDetector.get_node("CollisionShape2D").disabled = true
 		linear_velocity = Vector2(0 ,0)
@@ -33,7 +34,7 @@ func _on_DestroyTimer_timeout():
 
 func _on_CollisionDetector_area_entered(area):
 	if not area.is_in_group("player"):
-		destroyTimer.start(10)
+		destroyTimer.start(0.2)
 		sprite.visible = false
 		hitParticle.emitting = true
 		hitted = true

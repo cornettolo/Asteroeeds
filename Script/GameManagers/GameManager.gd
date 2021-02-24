@@ -9,11 +9,11 @@ onready var entitiesNode = $'../Entities'
 onready var UI = $"../GUI"
 onready var scoreGUI = $"../GUI/GUITop/ScoreCounter/ScoreNumber"
 onready var shipHealthGUI = $"../GUI/GUIBottom/ShipInfoCounters/HealthNumber"
-onready var istructionsUI = $"../GUI/Istructions"
+# onready var istructionsUI = $"../GUI/Istructions"
 onready var gameOverUI = $"../GUI/Game Over Screen"
 onready var pauseUI = $"../GUI/Pause Screen"
 
-const Asteroid = preload("res://Prefabs/Entities/Asteroid.tscn")
+const Asteroid = preload("res://Prefabs/Entities/Asteroids/Asteroid.tscn")
 const Repair = preload("res://Prefabs/Entities/RepairPack.tscn")
 var rng = RandomNumberGenerator.new()
 
@@ -28,7 +28,7 @@ func _ready():
 	rng.randomize()
 	
 	UI.visible = true
-	istructionsUI.visible = true
+	# istructiownsUI.visible = true
 	gameOverUI.visible = false
 	pauseUI.visible = false
 	updateUI(str(score), 'score')
@@ -74,8 +74,8 @@ func spawn_repair():
 
 
 func _on_player_move():
-	if (istructionsUI):
-		istructionsUI.queue_free()
+#	if (istructionsUI):
+#		istructionsUI.queue_free()
 	game_started = true
 	asteroidSpawnTimer.start(asteroidSpawnTime)
 	repairSpawnTimer.start(repairpackSpawnTime)
