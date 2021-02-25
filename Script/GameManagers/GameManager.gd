@@ -19,7 +19,7 @@ var rng = RandomNumberGenerator.new()
 
 var score = 0
 var playerHealth = 0
-var game_started = false
+var game_started = true
 var paused = false
 
 
@@ -112,19 +112,19 @@ func _notification(what):
 
 
 func _process(_delta):
-	if Input.is_action_pressed("ui_enter"):
-		if gameOverUI.visible:
-			reset_scene()
-		elif paused:
-			unpause()
-
-	if Input.is_action_pressed("ui_esc") and gameOverUI.visible:
+	if Input.is_action_just_released("ui_esc") and gameOverUI.visible:
 		get_tree().quit()
 		
 	if Input.is_action_just_released("ui_pause") and game_started:
 		if paused:
 			get_tree().quit()
 		pause()
+		
+	if Input.is_action_just_released("ui_enter"):
+		if gameOverUI.visible:
+			reset_scene()
+		elif paused:
+			unpause()
 		
 func updateUI(data, key):
 	if key=='score':

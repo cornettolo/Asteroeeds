@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Script/GameManagers/GameManager.gd" type="Script" id=1]
+
+[node name="GameManager" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+asteroidSpawnTime = 10
+repairpackSpawnTime = 30
+
+[node name="AsteroidSpawnTimer" type="Timer" parent="."]
+pause_mode = 1
+
+[node name="RepairSpawnTimer" type="Timer" parent="."]
+pause_mode = 1
+[connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_AsteroidSpawnTimer_timeout"]
+[connection signal="timeout" from="RepairSpawnTimer" to="." method="_on_RepairSpawnTimer_timeout"]
