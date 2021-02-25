@@ -102,5 +102,15 @@ rotation_speed = 3.6
 health = 80
 
 [node name="GUI" parent="." instance=ExtResource( 5 )]
+pause_mode = 2
+script = null
 
 [node name="GameManager" parent="." instance=ExtResource( 6 )]
+
+[node name="Popup" type="Control" parent="."]
+pause_mode = 2
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
