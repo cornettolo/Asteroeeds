@@ -15,7 +15,7 @@ R2: shoot
 ### Controls on keyboard:
 w/s: accelerate/decelerate \
 a/d: rotate left/right \
-spacebar: cut engine \
-control: shoot 
+control: cut engine \
+space: shoot 
 
 Exit: Alt+F4
