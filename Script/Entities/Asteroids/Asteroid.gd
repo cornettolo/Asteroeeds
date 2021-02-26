@@ -4,22 +4,27 @@ class_name Asteroid
 
 signal destroyed_asteroid(score_value)
 
-var SmallAsteroid = null 
-
-var rng = RandomNumberGenerator.new()
+onready var scorePop = preload("res://Prefabs/OtherEffects/LabelPop.tscn")
 
 export (int) var new_asteroids = 5
 export (int) var score_value = 50
+
+var SmallAsteroid = null 
+var rng = RandomNumberGenerator.new()
 
 onready var sprite = $'Sprite'
 onready var hitTimer = $'HitTimer'
 onready var particle = $'Particles2D'
 
 onready var gameManager = get_tree().get_root().get_node('Scene/GameManager')
-
 onready var ParentNode = $'..'
 
 func on_destroy():
+	var score_pop = scorePop.instance()
+	score_pop.set_text(str(score_value))
+	score_pop.set_global_position(position)
+	ParentNode.call_deferred("add_child", score_pop)
+	
 	for _i in range(new_asteroids):
 		var new_asteroid_instance = SmallAsteroid.instance()
 		new_asteroid_instance.position = position + Vector2(rng.randf_range(-10,10),rng.randf_range(-10,10))
@@ -33,7 +38,6 @@ func _ready():
 	rng.randomize()
 	linear_velocity = Vector2(rng.randf_range(-35,35),rng.randf_range(-35,35))
 	angular_velocity = rng.randf_range(-5,5)
-	
 	SmallAsteroid = load("res://Prefabs/Entities/Asteroids/SmallAsteroid.tscn")
 	
 	self.connect('destroyed_asteroid', gameManager, '_on_Asteroid_destroyed')
