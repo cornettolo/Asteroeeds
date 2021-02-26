@@ -11,15 +11,28 @@ export (int) var score_value = 50
 
 var SmallAsteroid = null 
 var rng = RandomNumberGenerator.new()
+var destroyed = false
 
 onready var sprite = $'Sprite'
 onready var hitTimer = $'HitTimer'
 onready var particle = $'Particles2D'
 
+onready var collisionShape = $'MainCollisionShape2D'
+onready var secondCollisionShape = $'SmallCollisionShape2D'
+onready var explosionEffect = $'ExplosionEffect'
+
 onready var gameManager = get_tree().get_root().get_node('Scene/GameManager')
 onready var ParentNode = $'..'
 
 func on_destroy():
+	destroyed = true
+	sprite.visible = false
+	hitDetector.queue_free()
+	collisionShape.queue_free()
+	secondCollisionShape.queue_free()
+	explosionEffect.play(0.8)
+	
+	
 	var score_pop = scorePop.instance()
 	score_pop.set_text(str(score_value))
 	score_pop.set_global_position(position)
@@ -30,7 +43,9 @@ func on_destroy():
 		new_asteroid_instance.position = position + Vector2(rng.randf_range(-10,10),rng.randf_range(-10,10))
 		ParentNode.call_deferred("add_child", new_asteroid_instance)
 	emit_signal("destroyed_asteroid", score_value)
-	queue_free()
+
+
+
 
 func _ready():
 	# particle.emitting = false
@@ -66,3 +81,7 @@ func _on_Area2D_body_entered(body):
 
 func _on_HitTimer_timeout():
 	sprite.modulate = Color(1, 1, 1)
+
+
+func _on_ExplosionDurationTimer_timeout():
+	queue_free()

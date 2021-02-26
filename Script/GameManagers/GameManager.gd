@@ -130,8 +130,9 @@ func _notification(what):
 func _process(_delta):	
 	if Input.is_action_just_released("ui_pause") and game_started:
 		if paused:
-			get_tree().quit()
-		pause()
+			unpause()
+		else:
+			pause()
 		
 		
 func updateUI(data, key):

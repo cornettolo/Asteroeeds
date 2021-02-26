@@ -17,7 +17,6 @@ func _on_Options_pressed():
 	emit_signal("button_pressed", 'options')
 
 
-
 func _on_Exit_pressed():
 	emit_signal("button_pressed", 'quit')
 	print('quit')

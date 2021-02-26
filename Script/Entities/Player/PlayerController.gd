@@ -22,13 +22,15 @@ var is_drifting = false
 var shoot_end_cycle = true
 var first_move = true
 var max_health = 0
+var destroyed = false
 
 onready var ParentNode = $'..'
-
 onready var hitEffectsTimer = $"Timers/HitEffect"
 onready var hitDetector = $'HitDetection'
+onready var collisionShape = $'CollisionShape2D'
 onready var sprite = $'Sprite'
-
+onready var damageEffect = $'DamageParticles'
+onready var explosionEffect = $'Explosion'
 onready var gameManager = get_tree().get_root().get_node('Scene/GameManager')
 
 
@@ -44,12 +46,10 @@ func input():
 	if Input.is_action_pressed('slow_down'):
 		acceleration -= Input.get_action_strength("slow_down")*max_acceleration
 	if Input.is_action_pressed('accelerate'):
-		acceleration += Input.get_action_strength("accelerate")*max_acceleration
-		
+				acceleration += Input.get_action_strength("accelerate")*max_acceleration	
 	if first_move and (rotation_dir != 0 or acceleration != 0):
 		emit_signal("moved")
-		first_move = false
-		
+		first_move = false	
 	is_drifting = Input.is_action_pressed('drift')
 
 
@@ -64,11 +64,8 @@ func accelerate():
 		velocity = Vector2(speed, 0).rotated(rotation)
 	else:
 		velocity = Vector2(-speed, 0).rotated(rotation)	
-		
-	
 	velocity = velocity.normalized() * speed + drift_velocity/(1+drag/100)
 	drift_velocity = velocity
-	
 	if drift_velocity.length() > max_drag:
 		drift_velocity = drift_velocity.normalized() * max_drag
 	speed = speed/((1+drag/25))
@@ -114,7 +111,12 @@ func healed(amount):
 
 
 func on_destroy():
-	queue_free()
+	destroyed = true
+	sprite.visible = false
+	hitDetector.queue_free()
+	collisionShape.queue_free()
+	damageEffect.queue_free()
+	explosionEffect.play(3.2)
 
 
 func _ready():
@@ -126,13 +128,13 @@ func _ready():
 
 
 func _physics_process(delta):
+	if (destroyed):
+		pass
 	input()
-	
 	if is_drifting:
 		drift()
 	else:
 		accelerate()
-	
 	check_outside()
 	rotation += rotation_dir * rotation_speed * delta
 	velocity = move_and_slide(velocity)
@@ -146,5 +148,11 @@ func _on_Area2D_body_entered(body):
 		if body_node.has_method('get_healing'):
 			healed(body_node.get_healing())
 
+
 func _on_HitTimer_timeout():
 	sprite.modulate = Color(1, 1, 1)
+
+
+
+func _on_ExplosionDurationTimer_timeout():
+	queue_free()

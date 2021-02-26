@@ -5,8 +5,10 @@ class_name Entity
 export (int) var damage = 0
 export (int) var health = 0
 
+
 var is_outside = false
 var new_pos = Vector2()
+var max_linear_velocity = 50
 
 onready var hitDetector = $'HitDetection'
 onready var max_health = health
@@ -45,8 +47,13 @@ func _integrate_forces(state):
 		t.origin.y = new_pos.y
 		state.set_transform(t)
 		is_outside = false	
+	if linear_velocity.x > max_linear_velocity:
+		linear_velocity.x = max_linear_velocity
+		print('x fixed')
+	if linear_velocity.y > max_linear_velocity:
+		linear_velocity.y = max_linear_velocity
+		print('y fixed')
 	
-		
 func get_damage():
 	return damage
 

@@ -95,11 +95,8 @@ __meta__ = {
 
 [node name="Player" parent="Entities" instance=ExtResource( 2 )]
 position = Vector2( 160, 80 )
-max_speed = 30.0
-max_acceleration = 0.4
 drag = 1.2
 rotation_speed = 3.6
-health = 80
 
 [node name="GUI" parent="." instance=ExtResource( 5 )]
 pause_mode = 2
