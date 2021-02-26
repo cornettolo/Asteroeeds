@@ -9,3 +9,6 @@ export_presets.cfg
 
 # Aseprite files
 *.aseprite
+
+# Exported files
+Export/*
