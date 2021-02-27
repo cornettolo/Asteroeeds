@@ -36,6 +36,8 @@ func shoot():
 	shoot_end_cycle = false
 
 func _process(delta):
+	if PlayerNode.destroyed:
+		return
 	input()
 	
 	if is_shooting and shoot_end_cycle:

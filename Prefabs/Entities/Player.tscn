@@ -43,11 +43,10 @@ extents = Vector2( 7, 3 )
 ]]
 script = ExtResource( 2 )
 max_speed = 20.0
-min_speed = -1.0
-max_acceleration = 0.5
-max_drag = 180.0
-drag = 1.5
-rotation_speed = 4.0
+max_acceleration = 0.4
+max_drag = 110.0
+drag = 1.8
+rotation_speed = 3.5
 health = 60
 
 [node name="Timers" type="Node" parent="."]

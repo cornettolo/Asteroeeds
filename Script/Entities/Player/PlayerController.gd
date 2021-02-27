@@ -129,7 +129,7 @@ func _ready():
 
 func _physics_process(delta):
 	if (destroyed):
-		pass
+		return
 	input()
 	if is_drifting:
 		drift()
