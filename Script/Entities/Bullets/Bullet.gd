@@ -24,8 +24,6 @@ func get_damage():
 func _physics_process(delta):
 	if hitted:
 		sprite.visible = false
-		collisionShape.disabled = true
-		collisionDetector.get_node("CollisionShape2D").disabled = true
 		linear_velocity = Vector2(0 ,0)
 		angular_velocity = 0
 
@@ -38,3 +36,5 @@ func _on_CollisionDetector_area_entered(area):
 		sprite.visible = false
 		hitParticle.emitting = true
 		hitted = true
+		collisionShape.queue_free()
+		collisionDetector.queue_free()

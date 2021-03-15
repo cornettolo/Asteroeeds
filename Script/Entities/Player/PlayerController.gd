@@ -5,7 +5,7 @@ export (float) var min_speed = -1
 export (float) var max_acceleration = 1.05
 export (float) var max_drag = 120
 export (float) var drag = 3
-export (float) var rotation_speed = 2.4
+export (float) var rotation_speed = 1.8
 export (int) var health = 100
 
 signal change_health(value)
